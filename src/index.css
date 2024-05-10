@@ -7,3 +7,8 @@
 body {
   font-family: "Raleway", sans-serif;
 }
+
+.n-menu a.active{
+    border-bottom: 2px solid #f87171;
+    padding-bottom: 3px;
+}

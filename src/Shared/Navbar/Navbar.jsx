@@ -17,11 +17,20 @@ const Navbar = () => {
       <li>
         <NavLink to={"/all_art_&_craft_items"}>Need Volunteer</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
+          </li>
+
+          <li>
+            <NavLink to={"/add_craft_item"}>My Profile</NavLink>
+          </li>
+        </>
+      )}
+
       <li>
-        <NavLink to={"/add_craft_item"}>My Profile</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/contact_us"}>Contact us</NavLink>
+        <NavLink to={"/contact"}>Contact us</NavLink>
       </li>
     </>
   );
@@ -50,12 +59,12 @@ const Navbar = () => {
       });
   };
   // scroll check
-  const [bgColor, setBgColor] = useState({});
+  const [bgColor, setBgColor] = useState(false);
   const handleScroll = () => {
     if (window.scrollY > 30) {
-      setBgColor({ backgroundColor: "#eaeaeadc", backdropFilter: "blur(8px)" });
+      setBgColor(true);
     } else {
-      setBgColor("");
+      setBgColor(false);
     }
   };
 
@@ -67,7 +76,11 @@ const Navbar = () => {
     };
   }, []);
   return (
-    <div className="! !z-50 !sticky top-0 " style={{ ...bgColor }}>
+    <div
+      className={`! !z-50 !sticky top-0 ${
+        bgColor ? "bg-black bg-opacity-60 text-white backdrop-blur-[8px]" : ""
+      } `}
+    >
       <div className="max-w-[1450px] min-h-[72px] flex justify-between items-center mx-auto">
         <div className="">
           <Link
@@ -85,7 +98,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className=" hidden h-full lg:flex">
-          <ul className="gap-10 n-menu flex items-center h-full font-medium menu-horizontal px-1">
+          <ul className="gap-10 n-menu flex font-bold items-center h-full menu-horizontal px-1">
             {menu}
           </ul>
         </div>
@@ -99,7 +112,7 @@ const Navbar = () => {
                   <div className="flex z-20 gap-3 items-center">
                     <div
                       data-tooltip-id="my-tooltip"
-                      data-tooltip-content={user?.displayName.toUpperCase()}
+                      data-tooltip-content={user?.displayName?.toUpperCase()}
                       data-tooltip-place="left"
                       className=" dropdown dropdown-end"
                     >
@@ -135,7 +148,7 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <Link to={"/login"}>
-                    <button className="btn text-cmnBG bg-transparent h-10 btn-sm border-[2px] border-cRed rounded-[5px]">
+                    <button className="btn text-cmnBG bg-cRed text-white h-10 btn-sm border-[2px] border-cRed rounded-full">
                       Login
                     </button>
                   </Link>

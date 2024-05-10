@@ -84,7 +84,11 @@ const Register = () => {
   };
   return (
     <div className="max-w-[1450px] mx-auto min-h-[calc(100vh-72px)] flex items-center">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg  lg:max-w-4xl">
+      <div
+        className={`flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg  lg:max-w-4xl ${
+          themeData ? "dark:bg-gray-800" : ""
+        }`}
+      >
         <div
           className="hidden bg-cover lg:flex items-center justify-center lg:w-1/2"
           style={{}}
@@ -99,7 +103,9 @@ const Register = () => {
           <form onSubmit={handleSubmit(fromSubmit)}>
             <div className="">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                className={`block mb-2 text-sm font-medium text-gray-600  ${
+                  themeData ? "dark:text-gray-200" : ""
+                }`}
                 htmlFor="LoggingEmailAddress"
               >
                 Full Name
@@ -120,7 +126,9 @@ const Register = () => {
             </div>
             <div className="mt-4">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                className={`block mb-2 text-sm font-medium text-gray-600  ${
+                  themeData ? "dark:text-gray-200" : ""
+                }`}
                 htmlFor="LoggingEmailAddress"
               >
                 Photo Url
@@ -141,7 +149,9 @@ const Register = () => {
             </div>
             <div className="mt-4">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                className={`block mb-2 text-sm font-medium text-gray-600  ${
+                  themeData ? "dark:text-gray-200" : ""
+                }`}
                 htmlFor="LoggingEmailAddress"
               >
                 Email Address
@@ -168,7 +178,9 @@ const Register = () => {
             <div className="mt-4 relative">
               <div className="flex justify-between">
                 <label
-                  className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200"
+                  className={`block mb-2 text-sm font-medium text-gray-600  ${
+                    themeData ? "dark:text-gray-200" : ""
+                  }`}
                   htmlFor="loggingPassword"
                 >
                   Password
@@ -187,13 +199,14 @@ const Register = () => {
                 } dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300`}
                 {...register("password", {
                   required: true,
-                  minLength: 8,
+                  minLength: 6,
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d!@#$%^&*]+$/,
                 })}
                 type={pSH ? "password" : "text"}
               />
               <span
                 onClick={() => setPSH(!pSH)}
-                className="absolute right-3 top-[30px] size-[40px] flex items-center justify-center text-[24px]"
+                className="absolute right-3 top-[27px] size-[40px] flex items-center justify-center text-[24px]"
               >
                 {pSH ? <AiFillEye /> : <AiFillEyeInvisible />}
               </span>
@@ -204,14 +217,20 @@ const Register = () => {
               )}
               {errors?.password?.type === "minLength" && (
                 <p className="text-red-500 dark:text-red-400">
-                  Password must be at least 8 characters!
+                  Password must be at least 6 characters!
+                </p>
+              )}
+              {errors?.password?.type === "pattern" && (
+                <p className="text-red-500 dark:text-red-400">
+                  Password must have at least one Uppercase letter, Lowercase
+                  letter,
                 </p>
               )}
             </div>
 
             <div className="mt-6">
               <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                Sign In
+                Register
               </button>
             </div>
           </form>
