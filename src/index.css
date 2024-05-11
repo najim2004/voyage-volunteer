@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: "Akshar", sans-serif;
 }
 
-.n-menu a.active{
-    border-bottom: 2px solid #f87171;
-    padding-bottom: 3px;
+.n-menu a.active {
+  border-bottom: 3px solid #f87171;
+  padding-bottom: 3px;
 }

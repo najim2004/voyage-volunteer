@@ -12,6 +12,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/Firebase.config";
 import Swal from "sweetalert2";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 
 export const AuthData = createContext(null);
 
@@ -20,7 +21,39 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(true);
   const [themeData, setThemeData] = useState(false);
+  const [data, setData] = useState([]);
+  const [uData, seUData] = useState([]);
+  const url = "http://localhost:5000";
+  useEffect(() => {
+    setDataLoading(true);
+    axios.get(`${url}/all-volunteer-post`).then((res) => {
+      seUData(res.data);
+      setDataLoading(false);
+    });
+  }, []);
 
+  useEffect(() => {
+    // 10-10-2024
+    const srt = (a, b) => {
+      if (b.deadline?.substring(6, 10) > a.deadline?.substring(6, 10)) {
+        return 1;
+      } else if (
+        b.deadline?.substring(6, 10) == a.deadline?.substring(6, 11) &&
+        b.deadline?.substring(3, 5) > a.deadline?.substring(3, 5)
+      ) {
+        return 1;
+      } else if (
+        b.deadline?.substring(6, 10) == a.deadline?.substring(6, 11) &&
+        b.deadline?.substring(3, 5) == a.deadline?.substring(3, 5) &&
+        b.deadline?.substring(0, 2) > a.deadline?.substring(0, 2)
+      ) {
+        return 1;
+      } else {
+        return -1;
+      }
+    };
+    setData(uData?.sort(srt));
+  }, [uData]);
   const registerUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -84,12 +117,12 @@ const AuthProvider = ({ children }) => {
 
   const contextData = {
     setDataLoading,
-
+    url,
     user,
     loading,
     dataLoading,
     themeData,
-
+    data,
     setThemeData,
     LoginByGoogle,
     LoginByGitHub,
