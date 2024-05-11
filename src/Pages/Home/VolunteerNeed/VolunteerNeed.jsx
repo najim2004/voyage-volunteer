@@ -11,7 +11,6 @@ const VolunteerNeed = () => {
   return (
     <div className="mt-[100px] max-w-[1250px] mx-auto">
       <h3 className="text-4xl text-center font-semibold">
-        {" "}
         Volunteer Needs Now
       </h3>
       <p className="text-center max-w-[700px] mx-auto font-medium mt-6">

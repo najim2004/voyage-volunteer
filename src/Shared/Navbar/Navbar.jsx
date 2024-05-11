@@ -1,14 +1,26 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { AuthData } from "../../Context/AuthProvider";
 import { getTheme, setTheme } from "../../Utilities/localstorage";
 import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
 const Navbar = () => {
+  const location = useLocation();
   const { user, logOutUser, sweetAlert, loading, setThemeData } =
     useContext(AuthData);
   const [isChecked, setChecked] = useState(false);
+  const [myProfile, setMyProfile] = useState(false);
+  useEffect(() => {
+    if (
+      location?.pathname === "/my-added-posts" ||
+      location?.pathname === "/my-requested-post"
+    ) {
+      setMyProfile(true);
+    } else {
+      setMyProfile(false);
+    }
+  }, [location?.pathname]);
   const menu = (
     <>
       <li>
@@ -23,8 +35,28 @@ const Navbar = () => {
             <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
           </li>
 
-          <li>
-            <NavLink to={"/add_craft_item"}>My Profile</NavLink>
+          <li className="cursor-pointer">
+            <details>
+              <summary
+                className={`${
+                  myProfile ? "pb-[3px] border-b-[3px] border-cRed" : ""
+                }`}
+              >
+                My Profile
+              </summary>
+              <ul className="!p-4 bg-gray-100 rounded-md space-y-4">
+                <li>
+                  <NavLink to={"/my-added-posts"}>
+                    Added Volunteer Posts
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/my-requested-post"}>
+                    Volunteer Requested Posts
+                  </NavLink>
+                </li>
+              </ul>
+            </details>
           </li>
         </>
       )}
