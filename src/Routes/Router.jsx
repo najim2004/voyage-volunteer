@@ -8,6 +8,7 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
 import PrivateRoute from "./PrivateRoute";
 import AddVolunteer from "../Pages/AddVolunteer/AddVolunteer";
 import ViewDetails from "../Pages/ViewDetails/ViewDetails";
+import NeedVolunteerPage from "../Pages/NeedVolunteerPage/NeedVolunteerPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactUs></ContactUs>,
+      },
+      {
+        path: "/need_volunteer",
+        element: <NeedVolunteerPage />,
       },
       {
         path: "/add-volunteer-post",

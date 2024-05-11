@@ -170,7 +170,7 @@ const AddVolunteer = () => {
 
           <input
             type="submit"
-            className="w-full lg:col-span-2 h-12 rounded-[10px] text-white font-bold bg-cRed"
+            className="w-full btn btn-sm lg:col-span-2 h-12 rounded-[10px] text-white font-bold bg-cRed"
             name=""
             id="Add"
           />

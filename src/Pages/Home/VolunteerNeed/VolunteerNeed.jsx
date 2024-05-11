@@ -4,19 +4,23 @@ import { AuthData } from "../../../Context/AuthProvider";
 import { CgDetailsMore } from "react-icons/cg";
 import { CiCalendar } from "react-icons/ci";
 import { BiCategoryAlt } from "react-icons/bi";
+import { FaArrowRight } from "react-icons/fa6";
 
 const VolunteerNeed = () => {
   const { data } = useContext(AuthData);
   return (
     <div className="mt-[100px] max-w-[1250px] mx-auto">
-      <h3 className="text-4xl text-center font-semibold"> Volunteer Needs Now</h3>
+      <h3 className="text-4xl text-center font-semibold">
+        {" "}
+        Volunteer Needs Now
+      </h3>
       <p className="text-center max-w-[700px] mx-auto font-medium mt-6">
         Discover urgent volunteer opportunities in your community. Browse
         projects needing immediate support, from food drives to environmental
         cleanup, and make a difference today.
       </p>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {data?.map((post) => (
+        {data?.slice(0, 6).map((post) => (
           <div key={post._id} className="p-4 flex flex-col">
             <div className="flex-grow ">
               <img
@@ -46,6 +50,14 @@ const VolunteerNeed = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-end mt-5 text-2xl font-semibold text-cRed">
+        <Link
+          to={"/need_volunteer"}
+          className="flex mr-3 lg:mr-6 items-center gap-2"
+        >
+          See All <FaArrowRight />
+        </Link>
       </div>
     </div>
   );

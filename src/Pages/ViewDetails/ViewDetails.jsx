@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
 import { IoCloseCircleSharp } from "react-icons/io5";
+import RequestForm from "./RequestForm/RequestForm";
 
 const ViewDetails = () => {
   const { id } = useParams();
-  const { url } = useContext(AuthData);
+  const { url, themeData } = useContext(AuthData);
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
   useEffect(() => {
     axios.get(`${url}/all-volunteer-post/${id}`).then((res) => {
       setData(res.data);
-      console.log(res.data);
     });
   }, [url, id]);
 
@@ -20,9 +20,9 @@ const ViewDetails = () => {
     setShow(!show);
   };
   return (
-    <div className="relative">
+    <div className="relative px-3">
       <div className="max-w-[1350px] items-center  min-h-[calc(100vh-112px)] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16">
-        <div className="h-[500px] bg-gray-200 rounded-[10px]">
+        <div className="md:h-[300px] h-[200px] lg:h-[500px] bg-gray-200 rounded-[10px]">
           <img
             src={data?.thumbnail}
             className="h-full w-full rounded-[10px]"
@@ -55,7 +55,7 @@ const ViewDetails = () => {
           </div>
           <button
             onClick={handleModal}
-            className="w-full mt-10 h-12 btn text-white text-xl bg-cRed font-semibold rounded-[5px]"
+            className="w-full mt-6 lg:mt-10 md:h-9 h-8 lg:h-12 btn btn-sm text-white text-xl bg-cRed font-semibold rounded-[5px]"
           >
             Be a Volunteer
           </button>
@@ -64,10 +64,14 @@ const ViewDetails = () => {
       <div
         className={`${
           show ? "flex" : "hidden"
-        } absolute min-h-screen w-full -mt-[72px] backdrop-blur-[5px] z-50 top-0 left-0 bg-white bg-opacity-50`}
+        } absolute min-h-screen w-full -mt-[72px] backdrop-blur-[8px] z-50 top-0 left-0 bg-black  bg-opacity-50`}
       >
         <div className="inset-0 h-full relative w-full">
-          <IoCloseCircleSharp className="text-5xl absolute text-cRed right-5 top-5" onClick={handleModal} />
+          <IoCloseCircleSharp
+            className="text-5xl absolute text-cRed right-5 top-5"
+            onClick={handleModal}
+          />
+          <RequestForm data={data} />
         </div>
       </div>
     </div>
