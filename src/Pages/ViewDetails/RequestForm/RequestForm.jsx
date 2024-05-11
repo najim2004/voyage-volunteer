@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthData } from "../../../Context/AuthProvider";
+import axios from "axios";
 const RequestForm = ({ data }) => {
-  const { user, themeData, sweetAlert } = useContext(AuthData);
+  const { user, themeData, sweetAlert, url } = useContext(AuthData);
   const handleRequest = (e) => {
     e.preventDefault();
     const requestData = {
@@ -19,7 +20,14 @@ const RequestForm = ({ data }) => {
       organizer_name: data.organizer_name,
       organizer_email: data.organizer_email,
     };
-    console.log(requestData);
+    axios
+      .post(`${url}/bookings`, requestData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="max-w-[1250px] p-3 lg:p-6 mx-auto">

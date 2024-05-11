@@ -7,10 +7,11 @@ import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
 const Navbar = () => {
   const location = useLocation();
-  const { user, logOutUser, sweetAlert, loading, setThemeData } =
+  const { user, logOutUser, sweetAlert, loading, themeData, setThemeData } =
     useContext(AuthData);
   const [isChecked, setChecked] = useState(false);
   const [myProfile, setMyProfile] = useState(false);
+  const [bgColor, setBgColor] = useState(false);
   useEffect(() => {
     if (
       location?.pathname === "/my-added-posts" ||
@@ -44,7 +45,11 @@ const Navbar = () => {
               >
                 My Profile
               </summary>
-              <ul className="!p-4 bg-gray-100 rounded-md space-y-4">
+              <ul
+                className={`!p-4 ${
+                  bgColor || themeData ? "bg-gray-700" : "bg-white"
+                }  rounded-md space-y-4`}
+              >
                 <li>
                   <NavLink to={"/my-added-posts"}>
                     Added Volunteer Posts
@@ -91,7 +96,7 @@ const Navbar = () => {
       });
   };
   // scroll check
-  const [bgColor, setBgColor] = useState(false);
+
   const handleScroll = () => {
     if (window.scrollY > 30) {
       setBgColor(true);

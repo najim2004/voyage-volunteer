@@ -5,9 +5,12 @@ import { AuthData } from "../../Context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { RiLayoutGrid2Fill } from "react-icons/ri";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const NeedVolunteerPage = () => {
   const { data, url } = useContext(AuthData);
+  const [grid, setGrid] = useState(true);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     setPosts(data);
@@ -48,39 +51,88 @@ const NeedVolunteerPage = () => {
           className="btn h-full lg:w-[150px] border-none rounded-l-none bg-cRed text-lg font-semibold text-white"
         />
       </form>
-
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {posts?.map((post) => (
-          <div key={post._id} className="p-4 flex flex-col">
-            <div className="flex-grow ">
-              <img
-                className="w-full bg-gray-200 h-[250px] rounded-[5px]"
-                src={post.thumbnail}
-                alt=""
-              />
-              <div className="flex justify-between font-medium text-gray-500 mt-4">
-                <p className="flex items-center gap-1">
-                  <CiCalendar />
-                  {post.deadline}
-                </p>
-                <p>{post.organizer_name}</p>
-              </div>
-              <h3 className="mt-3 font-bold text-2xl">{post.postTitle}</h3>
-            </div>
-            <div className="flex mt-4 justify-between">
-              <p className="text-lg flex items-center gap-1 font-semibold text-gray-500">
-                <BiCategoryAlt />
-                {post.category}
-              </p>
-              <Link to={`/details/${post._id}`}>
-                <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10">
-                  View Details <CgDetailsMore />
-                </button>
-              </Link>
-            </div>
-          </div>
-        ))}
+      <div className="mt-10 flex justify-end gap-4 pr-5 text-2xl">
+        <RiLayoutGrid2Fill
+          className={`${grid ? "text-cRed" : ""}`}
+          onClick={() => setGrid(true)}
+        />
+        <GiHamburgerMenu
+          className={`${!grid ? "text-cRed" : ""}`}
+          onClick={() => setGrid(false)}
+        />
       </div>
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {grid &&
+          posts?.map((post) => (
+            <div key={post._id} className="p-4 flex flex-col">
+              <div className="flex-grow ">
+                <img
+                  className="w-full bg-gray-200 h-[250px] rounded-[5px]"
+                  src={post.thumbnail}
+                  alt=""
+                />
+                <div className="flex justify-between font-medium text-gray-500 mt-4">
+                  <p className="flex items-center gap-1">
+                    <CiCalendar />
+                    {post.deadline}
+                  </p>
+                  <p>{post.organizer_name}</p>
+                </div>
+                <h3 className="mt-3 font-bold text-2xl">{post.postTitle}</h3>
+              </div>
+              <div className="flex mt-4 justify-between">
+                <p className="text-lg flex items-center gap-1 font-semibold text-gray-500">
+                  <BiCategoryAlt />
+                  {post.category}
+                </p>
+                <Link to={`/details/${post._id}`}>
+                  <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10">
+                    View Details <CgDetailsMore />
+                  </button>
+                </Link>
+              </div>
+            </div>
+          ))}
+      </div>
+      {!grid && (
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
+            <tbody>
+              {posts?.map((post) => (
+                <tr className="font-bold lg:text-lg" key={post._id}>
+                  <td>
+                    <img
+                      src={post.thumbnail}
+                      className="min-w-[100px] lg:min-w-[200px] h-[70px] lg:h-[130px] rounded-[10px] bg-gray-200"
+                      alt=""
+                    />
+                  </td>
+                  <td>{post.postTitle}</td>
+                  <td>
+                    <p className=" text-nowrap flex items-center gap-1 font-semibold text-gray-500">
+                      <BiCategoryAlt />
+                      {post.category}
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex text-nowrap items-center gap-1">
+                      <CiCalendar />
+                      {post.deadline}
+                    </p>
+                  </td>
+                  <td>
+                    <Link to={`/details/${post._id}`}>
+                      <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10 min-w-[150px]">
+                        View Details <CgDetailsMore />
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       {posts.length === 0 && (
         <div className="flex flex-col items-center justify-center">
           <p className="text-xl font-semibold text-gray-500">No post found</p>
