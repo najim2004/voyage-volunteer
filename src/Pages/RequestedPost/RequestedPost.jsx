@@ -1,23 +1,56 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
+import Swal from "sweetalert2";
+import Lottie from "lottie-react";
+import no from "/public/no.json";
 
 const RequestedPost = () => {
   const { url, user } = useContext(AuthData);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
-      setData(res.data);
-    });
-  }, [url,user]);
+    useEffect(() => {
+      axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
+        setData(res.data);
+      });
+    }, [url, user]);
 
-  const handleCancel = (id) =>{
-    
-  }
+  const handleCancel = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${url}/requests/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data1) => {
+            console.log(data1);
+            if (data1.deletedCount > 0) {
+              setData(data.filter((item) => item._id !== id));
+              console.log(data);
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
   return (
     <div className="relative">
-      <div className="max-w-[1250px]  pt-8 mx-auto">
+      <div className="max-w-[1250px] min-h-[calc(100vh-104px)] pt-8 mx-auto">
         <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
           My Volunteer Requested Posts
         </h3>
@@ -25,7 +58,10 @@ const RequestedPost = () => {
           <table className="table table-zebra">
             <tbody className="flex flex-col gap-3 *:!rounded-[10px]">
               {data?.map((post) => (
-                <tr className="font-bold flex justify-between items-center text-lg border  border-gray-300 " key={post._id}>
+                <tr
+                  className="font-bold flex justify-between items-center text-lg border  border-gray-300 "
+                  key={post._id}
+                >
                   <td>
                     <img
                       src={post.thumbnail}
@@ -41,13 +77,24 @@ const RequestedPost = () => {
                     </div>
                   </td>
                   <td>
-                    <button className="btn bg-cRed text-white btn-sm h-10">Cancel</button>
+                    <button
+                      onClick={() => handleCancel(post._id)}
+                      className="btn bg-cRed text-white btn-sm h-10"
+                    >
+                      Cancel
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {data?.length == 0 && (
+          <div className="flex flex-col items-center justify-center">
+            <Lottie animationData={no} className="max-w-[350px]" />
+            <h3 className="text-3xl font-bold text-red-500">No Post Found!</h3>
+          </div>
+        )}
       </div>
     </div>
   );

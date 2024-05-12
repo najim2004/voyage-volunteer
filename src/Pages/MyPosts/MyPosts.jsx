@@ -8,6 +8,8 @@ import DatePicker from "react-datepicker";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
+import Lottie from "lottie-react";
+import no from "/public/no.json";
 
 const MyPosts = () => {
   const { url, user, themeData, sweetAlert } = useContext(AuthData);
@@ -161,6 +163,12 @@ const MyPosts = () => {
           </table>
         </div>
         <Tooltip id="my-tooltip" />
+        {data?.length == 0 && (
+          <div className="flex flex-col items-center justify-center">
+            <Lottie animationData={no} className="max-w-[350px]" />
+            <h3 className="text-3xl font-bold text-red-500">No Post Found!</h3>
+          </div>
+        )}
       </div>
       <dialog
         id="my_modal_3"
