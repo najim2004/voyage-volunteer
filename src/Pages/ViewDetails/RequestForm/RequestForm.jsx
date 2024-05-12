@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthData } from "../../../Context/AuthProvider";
 import axios from "axios";
+import { IoCloseCircleSharp } from "react-icons/io5";
 const RequestForm = ({ data }) => {
   const { user, themeData, sweetAlert, url } = useContext(AuthData);
   const handleRequest = (e) => {
@@ -34,8 +35,15 @@ const RequestForm = ({ data }) => {
       <div
         className={`lg:max-w-[70%] mx-auto  ${
           themeData ? "dark:bg-gray-800" : "bg-gray-100"
-        } min-h-[calc(100vh-113px)] p-3 lg:p-6 rounded-[20px]`}
+        } min-h-[calc(100vh-113px)] p-3 relative lg:p-6 rounded-[20px]`}
       >
+        <form method="dialog">
+          {/* if there is a button in form, it will close the modal */}
+          <button className="btn text-3xl text-cRed btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <IoCloseCircleSharp />
+          </button>
+        </form>
+
         <h3 className="text-center md:text-2xl mt-8 text-xl lg:text-3xl font-bold">
           Volunteer Join Requesting Form
         </h3>

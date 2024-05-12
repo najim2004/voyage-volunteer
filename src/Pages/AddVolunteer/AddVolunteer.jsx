@@ -19,9 +19,9 @@ const AddVolunteer = () => {
       volunteers_needed: form.volunteers_needed.value,
       organizer_name: form.organizer_name.value,
       organizer_email: form.organizer_email.value,
-      deadline: `${startDate.getDate()}-${
+      deadline: `${startDate.getDate()}/${
         startDate.getMonth() + 1
-      }-${startDate.getFullYear()}`,
+      }/${startDate.getFullYear()}`,
     };
     const url = "http://localhost:5000/all-volunteer-post";
     axios
