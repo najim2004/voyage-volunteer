@@ -26,7 +26,6 @@ const NeedVolunteerPage = () => {
         } else {
           setPosts(data);
         }
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -97,13 +96,13 @@ const NeedVolunteerPage = () => {
       {!grid && (
         <div className="overflow-x-auto">
           <table className="table table-zebra">
-            <tbody>
+            <tbody className="flex flex-col gap-3 *:!rounded-[10px]">
               {posts?.map((post) => (
-                <tr className="font-bold lg:text-lg" key={post._id}>
+                <tr className="font-bold lg:text-lg border border-gray-300 flex justify-between items-center" key={post._id}>
                   <td>
                     <img
                       src={post.thumbnail}
-                      className="min-w-[100px] lg:min-w-[200px] h-[70px] lg:h-[130px] rounded-[10px] bg-gray-200"
+                      className="min-w-[100px] max-w-[100px] lg:max-w-[250px] w-full lg:min-w-[200px] h-[90px] lg:h-[130px] rounded-[10px] bg-gray-200"
                       alt=""
                     />
                   </td>

@@ -22,7 +22,7 @@ const RequestForm = ({ data }) => {
       organizer_email: data.organizer_email,
     };
     axios
-      .post(`${url}/bookings`, requestData)
+      .post(`${url}/requests`, requestData)
       .then((res) => {
         console.log(res.data);
       })

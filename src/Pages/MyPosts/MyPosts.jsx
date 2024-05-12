@@ -113,21 +113,27 @@ const MyPosts = () => {
   return (
     <div className="relative">
       <div className="max-w-[1250px]  pt-8 mx-auto">
+        <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
+          My Added Volunteer Need Posts
+        </h3>
         <div className="overflow-x-auto">
           <table className="table table-zebra">
-            <tbody>
+            <tbody className="flex flex-col gap-3 *:!rounded-[10px]">
               {data?.map((post) => (
-                <tr className="font-bold text-lg" key={post._id}>
-                  <th>
+                <tr
+                  className="font-bold border border-gray-300 flex items-center justify-between text-lg"
+                  key={post._id}
+                >
+                  <td>
                     <img
                       src={post.thumbnail}
                       className="min-w-[200px] max-w-[200px] h-[130px] rounded-[10px] bg-gray-200"
                       alt=""
                     />
-                  </th>
+                  </td>
                   <td>{post.postTitle}</td>
                   <td>{post.deadline}</td>
-                  <td>
+                  <td className="flex justify-center">
                     <div className="w-full h-full flex flex-col justify-between gap-2">
                       <button
                         onClick={() => handleModal(post)}
