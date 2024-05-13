@@ -22,7 +22,17 @@ const AuthProvider = ({ children }) => {
   const [dataLoading, setDataLoading] = useState(true);
   const [themeData, setThemeData] = useState(false);
   const [data, setData] = useState([]);
+  const [testimonial, setTestimonial] = useState([]);
+
   const url = "http://localhost:5000";
+
+  // useEffect for Testimonial data
+  useEffect(() => {
+    axios.get(`${url}/testimonial`).then((res) => {
+      setTestimonial(res.data);
+    });
+  }, []);
+
   useEffect(() => {
     setDataLoading(true);
     axios.get(`${url}/all-volunteer-post`).then((res) => {
@@ -94,6 +104,7 @@ const AuthProvider = ({ children }) => {
 
   const contextData = {
     setDataLoading,
+    testimonial,
     url,
     user,
     loading,
