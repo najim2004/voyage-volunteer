@@ -72,11 +72,11 @@ const RequestForm = ({ data }) => {
     }
   };
   return (
-    <div className="max-w-[1250px] p-3 lg:p-6 mx-auto">
+    <div className="max-w-[1250px] p-3 lg:p-6 min-h-[calc(100vh-113px)] overflow-x-hidden flex items-center justify-center mx-auto">
       <div
         className={`lg:max-w-[70%] mx-auto  ${
           themeData ? "dark:bg-gray-800" : "bg-gray-100"
-        } min-h-[calc(100vh-113px)] p-3 relative lg:p-6 rounded-[20px]`}
+        }  p-3 relative lg:p-6 rounded-[20px] overflow-x-hidden`}
       >
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}

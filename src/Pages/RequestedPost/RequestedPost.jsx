@@ -52,7 +52,7 @@ const RequestedPost = () => {
   };
   return (
     <div className="relative">
-      <div className="max-w-[1250px] min-h-[calc(100vh-104px)] pt-8 mx-auto">
+      <div className="max-w-[1250px] min-h-[calc(100vh-140px)] pt-8 mx-auto">
         <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
           My Volunteer Requested Posts
         </h3>

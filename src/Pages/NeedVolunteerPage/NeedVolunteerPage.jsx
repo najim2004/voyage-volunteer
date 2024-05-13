@@ -19,7 +19,7 @@ const NeedVolunteerPage = () => {
     e.preventDefault();
     const search = e.target.search.value;
     axios
-      .get(`${url}/all-volunteer-post?category=${search}`)
+      .get(`${url}/all-volunteer-post?title=${search}`)
       .then((res) => {
         if (search) {
           setPosts(res.data);
@@ -32,7 +32,8 @@ const NeedVolunteerPage = () => {
       });
   };
   return (
-    <div className="max-w-[1250px] mx-auto">
+    <div className="max-w-[1250px] mx-auto min-h-[calc(100vh-73px)]">
+      <h3 className="text-3xl font-bold text-center mt-12">Find Volunteer Opportunities Near You</h3>
       <form
         onSubmit={handleSearch}
         className="h-12 w-full mt-8 px-3 lg:w-[752px] mx-auto rounded-lg flex items-center "
@@ -106,7 +107,7 @@ const NeedVolunteerPage = () => {
                   <td>
                     <img
                       src={post.thumbnail}
-                      className="min-w-[100px] max-w-[100px] lg:max-w-[250px] w-full lg:min-w-[200px] h-[90px] lg:h-[130px] rounded-[10px] bg-gray-200"
+                      className="min-w-[100px] max-w-[100px] lg:max-w-[250px] w-full lg:min-w-[250px] h-[90px] lg:h-[150px] rounded-[10px] bg-gray-200"
                       alt=""
                     />
                   </td>

@@ -47,11 +47,11 @@ const AddVolunteer = () => {
   };
 
   return (
-    <div className="max-w-[1450px] mt-10 px-3 mx-auto">
+    <div className="max-w-[1450px] min-h-[calc(100vh-113px)] flex items-center mt-10 px-3 mx-auto">
       <div
         className={`lg:max-w-[70%] mx-auto  ${
           themeData ? "dark:bg-gray-800" : "bg-gray-100"
-        } min-h-[calc(100vh-113px)] p-3 lg:p-6 rounded-[20px]`}
+        }  p-3 lg:p-6 rounded-[20px]`}
       >
         <h3 className="text-center md:text-2xl text-xl lg:text-3xl font-bold">
           Add Your Volunteer Post

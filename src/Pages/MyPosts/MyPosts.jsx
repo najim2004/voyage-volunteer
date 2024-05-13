@@ -115,7 +115,7 @@ const MyPosts = () => {
 
   return (
     <div className="relative">
-      <div className="max-w-[1250px]  pt-8 mx-auto">
+      <div className="max-w-[1250px] min-h-[calc(100vh-140px)]  pt-8 mx-auto">
         <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
           My Added Volunteer Need Posts
         </h3>
@@ -135,7 +135,9 @@ const MyPosts = () => {
                     />
                   </td>
                   <td className="lg:w-[350px]">{post.postTitle}</td>
-                  <td className="flex items-center gap-1">Deadline:{post.deadline}</td>
+                  <td className="flex items-center gap-1">
+                    Deadline:{post.deadline}
+                  </td>
                   <td className="flex justify-center">
                     <div className="w-full h-full flex flex-col justify-between gap-2">
                       <button
@@ -175,11 +177,11 @@ const MyPosts = () => {
         id="my_modal_3"
         className="modal min-h-screen backdrop-blur-[8px] !overflow-y-auto"
       >
-        <div className="max-w-[1450px] mx-auto py-6 lg:py-10">
+        <div className="max-w-[1450px] mx-auto  py-6 lg:py-10">
           <div
             className={`mx-auto  ${
               themeData ? "dark:bg-gray-800" : "bg-gray-100"
-            } min-h-[calc(100vh-113px)] w-full relative p-3 lg:p-6 rounded-[20px]`}
+            } w-full relative p-3 lg:p-6 rounded-[20px]`}
           >
             <h3 className="text-center md:text-2xl text-xl lg:text-3xl font-bold">
               Add Your Volunteer Post
