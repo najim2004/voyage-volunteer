@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { RiLayoutGrid2Fill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Helmet } from "react-helmet-async";
 
 const NeedVolunteerPage = () => {
   const { data, url } = useContext(AuthData);
@@ -33,7 +34,12 @@ const NeedVolunteerPage = () => {
   };
   return (
     <div className="max-w-[1250px] mx-auto min-h-[calc(100vh-73px)]">
-      <h3 className="text-3xl font-bold text-center mt-12">Find Volunteer Opportunities Near You</h3>
+      <Helmet>
+        <title>VV || Volunteer posts</title>
+      </Helmet>
+      <h3 className="text-3xl font-bold text-center mt-12">
+        Find Volunteer Opportunities Near You
+      </h3>
       <form
         onSubmit={handleSearch}
         className="h-12 w-full mt-8 px-3 lg:w-[752px] mx-auto rounded-lg flex items-center "

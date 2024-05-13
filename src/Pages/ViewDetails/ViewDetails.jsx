@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
 import RequestForm from "./RequestForm/RequestForm";
+import { Helmet } from "react-helmet-async";
 
 const ViewDetails = () => {
   const { id } = useParams();
@@ -23,6 +24,9 @@ const ViewDetails = () => {
   };
   return (
     <div className="relative overflow-x-hidden px-3">
+      <Helmet>
+        <title>VV || {`${data?.postTitle}`}</title>
+      </Helmet>
       <div className="max-w-[1350px] items-center  min-h-[calc(100vh-112px)] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16">
         <div className="md:h-[300px] h-[200px] lg:h-[500px] bg-gray-200 rounded-[10px]">
           <img
