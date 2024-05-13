@@ -12,9 +12,11 @@ const RequestedPost = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get(`${url}/requests?email=${user?.email}`, { withCredentials: true })
+      .then((res) => {
+        setData(res.data);
+      });
   }, [url, user]);
 
   const handleCancel = async (id, pId) => {
@@ -88,7 +90,7 @@ const RequestedPost = () => {
                   <td>
                     <button
                       onClick={() => handleCancel(post._id, post.id)}
-                      className="btn bg-cRed text-white btn-sm h-10"
+                      className="btn bg-red-500 text-white btn-sm h-10"
                     >
                       Cancel
                     </button>

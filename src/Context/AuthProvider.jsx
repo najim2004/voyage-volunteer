@@ -24,7 +24,8 @@ const AuthProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [testimonial, setTestimonial] = useState([]);
 
-  const url = "http://localhost:5000";
+  const url =
+    "https://voyage-volunteer-server-q1f5o0oge-najim2004s-projects.vercel.app/";
 
   // useEffect for Testimonial data
   useEffect(() => {
@@ -57,9 +58,25 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedInUser = { email: userEmail };
+      setUser(currentUser);
       if (currentUser) {
-        setUser(currentUser);
+        axios
+          .post("http://localhost:5000/jwt", loggedInUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("token response", res.data);
+          });
       } else {
+        axios
+          .post("http://localhost:5000/logout", loggedInUser, {
+            withCredentials: "true",
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
         setUser(null);
       }
       setLoading(false);

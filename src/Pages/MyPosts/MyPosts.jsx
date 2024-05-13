@@ -30,9 +30,11 @@ const MyPosts = () => {
   }, [deadline]);
 
   useEffect(() => {
-    axios.get(`${url}/all-volunteer-post?email=${user.email}`).then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get(`${url}/my-volunteer-post/${user.email}`, { withCredentials: true })
+      .then((res) => {
+        setData(res.data);
+      });
   }, [user, url]);
 
   const handleModal = (post) => {
