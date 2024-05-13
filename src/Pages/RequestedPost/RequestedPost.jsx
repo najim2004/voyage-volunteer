@@ -4,18 +4,20 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import no from "/public/no.json";
+import { Link } from "react-router-dom";
+import { CgDetailsMore } from "react-icons/cg";
 
 const RequestedPost = () => {
   const { url, user } = useContext(AuthData);
   const [data, setData] = useState([]);
 
-    useEffect(() => {
-      axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
-        setData(res.data);
-      });
-    }, [url, user]);
+  useEffect(() => {
+    axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
+      setData(res.data);
+    });
+  }, [url, user]);
 
-  const handleCancel = (id) => {
+  const handleCancel = async (id, pId) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -24,27 +26,27 @@ const RequestedPost = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        fetch(`${url}/requests/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data1) => {
-            console.log(data1);
-            if (data1.deletedCount > 0) {
-              setData(data.filter((item) => item._id !== id));
-              console.log(data);
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success",
-              });
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        try {
+          const res1 = await axios.delete(`${url}/requests/${id}`);
+          console.log(res1.data);
+          if (res1.data.deletedCount > 0) {
+            const res = await axios.patch(
+              `${url}/all-volunteer-post/increment/${pId}`
+            );
+            console.log(res.data);
+            setData(data.filter((item) => item._id !== id));
+
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   };
@@ -69,16 +71,23 @@ const RequestedPost = () => {
                       alt=""
                     />
                   </td>
-                  <td>{post.postTitle}</td>
-                  <td className="text-nowrap">{post.deadline}</td>
+                  <td className="lg:w-[350px]">{post.postTitle}</td>
+                  <td className="text-nowrap">Deadline:{post.deadline}</td>
                   <td>
                     <div className=" bg-green-500 w-[90px] flex justify-center items-center text-white rounded-md !text-center !font-semibold h-10">
                       {post.status}
                     </div>
                   </td>
                   <td>
+                    <Link to={`/details/${post.id}`}>
+                      <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10 min-w-[150px]">
+                        View Details <CgDetailsMore />
+                      </button>
+                    </Link>
+                  </td>
+                  <td>
                     <button
-                      onClick={() => handleCancel(post._id)}
+                      onClick={() => handleCancel(post._id, post.id)}
                       className="btn bg-cRed text-white btn-sm h-10"
                     >
                       Cancel

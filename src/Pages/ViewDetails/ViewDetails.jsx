@@ -6,7 +6,7 @@ import RequestForm from "./RequestForm/RequestForm";
 
 const ViewDetails = () => {
   const { id } = useParams();
-  const { url, themeData } = useContext(AuthData);
+  const { url, themeData, sweetAlert } = useContext(AuthData);
   const [data, setData] = useState([]);
   useEffect(() => {
     axios.get(`${url}/all-volunteer-post/${id}`).then((res) => {
@@ -14,6 +14,13 @@ const ViewDetails = () => {
     });
   }, [url, id]);
 
+  const handleRequest = () => {
+    if (data.volunteersNeeded !== 0) {
+      document.getElementById("my_modal_3").showModal();
+    } else {
+      sweetAlert("Sorry", "warning", "No More Volunteers Need", true, 2000);
+    }
+  };
   return (
     <div className="relative px-3">
       <div className="max-w-[1350px] items-center  min-h-[calc(100vh-112px)] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16">
@@ -49,7 +56,7 @@ const ViewDetails = () => {
             </p>
           </div>
           <button
-            onClick={() => document.getElementById("my_modal_3").showModal()}
+            onClick={handleRequest}
             className="w-full mt-6 lg:mt-10 md:h-9 h-8 lg:h-12 btn btn-sm text-white text-xl bg-cRed font-semibold rounded-[5px]"
           >
             Be a Volunteer

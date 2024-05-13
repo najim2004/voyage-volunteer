@@ -11,12 +11,13 @@ const AddVolunteer = () => {
     e.preventDefault();
     const form = e.target;
     const data = {
-      title: form.title.value,
+      postDate: new Date(),
+      postTitle: form.title.value,
       thumbnail: form.thumbnail.value,
       description: form.description.value,
       category: form.category.value,
       location: form.location.value,
-      volunteers_needed: form.volunteers_needed.value,
+      volunteersNeeded: parseInt(form.volunteers_needed.value),
       organizer_name: form.organizer_name.value,
       organizer_email: form.organizer_email.value,
       deadline: `${startDate.getDate()}/${

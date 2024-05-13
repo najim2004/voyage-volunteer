@@ -29,8 +29,9 @@ const VolunteerNeed = () => {
               />
               <div className="flex justify-between font-medium text-gray-500 mt-4">
                 <p className="flex items-center gap-1">
+                  Published Date:
                   <CiCalendar />
-                  {post.deadline}
+                  {post.postDate}
                 </p>
                 <p>{post.organizer_name}</p>
               </div>

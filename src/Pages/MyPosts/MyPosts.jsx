@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import no from "/public/no.json";
+import { SlCalender } from "react-icons/sl";
 
 const MyPosts = () => {
   const { url, user, themeData, sweetAlert } = useContext(AuthData);
@@ -48,7 +49,7 @@ const MyPosts = () => {
       description: form.description.value,
       category: form.category.value,
       location: form.location.value,
-      volunteersNeeded: form.volunteers_needed.value,
+      volunteersNeeded: parseInt(form.volunteers_needed.value),
       organizer_name: form.organizer_name.value,
       organizer_email: form.organizer_email.value,
       deadline: `${startDate.getDate()}/${
@@ -133,8 +134,8 @@ const MyPosts = () => {
                       alt=""
                     />
                   </td>
-                  <td>{post.postTitle}</td>
-                  <td>{post.deadline}</td>
+                  <td className="lg:w-[350px]">{post.postTitle}</td>
+                  <td className="flex items-center gap-1">Deadline:{post.deadline}</td>
                   <td className="flex justify-center">
                     <div className="w-full h-full flex flex-col justify-between gap-2">
                       <button
@@ -307,7 +308,13 @@ const MyPosts = () => {
                 id="Add"
               />
             </form>
-            <Toaster position="bottom-center" reverseOrder={false} />
+            <Toaster
+              toastOptions={{
+                className: `!bg-gray-200 !text-red-500`,
+              }}
+              position="bottom-center"
+              reverseOrder={false}
+            />
           </div>
         </div>
       </dialog>

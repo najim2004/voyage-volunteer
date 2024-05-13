@@ -72,8 +72,9 @@ const NeedVolunteerPage = () => {
                 />
                 <div className="flex justify-between font-medium text-gray-500 mt-4">
                   <p className="flex items-center gap-1">
+                    Published Date:
                     <CiCalendar />
-                    {post.deadline}
+                    {post.postDate}
                   </p>
                   <p>{post.organizer_name}</p>
                 </div>
@@ -98,7 +99,10 @@ const NeedVolunteerPage = () => {
           <table className="table table-zebra">
             <tbody className="flex flex-col gap-3 *:!rounded-[10px]">
               {posts?.map((post) => (
-                <tr className="font-bold lg:text-lg border border-gray-300 flex justify-between items-center" key={post._id}>
+                <tr
+                  className="font-bold lg:text-lg border border-gray-300 flex justify-between items-center"
+                  key={post._id}
+                >
                   <td>
                     <img
                       src={post.thumbnail}
@@ -106,7 +110,7 @@ const NeedVolunteerPage = () => {
                       alt=""
                     />
                   </td>
-                  <td>{post.postTitle}</td>
+                  <td className="lg:w-[350px]">{post.postTitle}</td>
                   <td>
                     <p className=" text-nowrap flex items-center gap-1 font-semibold text-gray-500">
                       <BiCategoryAlt />
@@ -115,8 +119,9 @@ const NeedVolunteerPage = () => {
                   </td>
                   <td>
                     <p className="flex text-nowrap items-center gap-1">
+                      Published Date:
                       <CiCalendar />
-                      {post.deadline}
+                      {post.postDate}
                     </p>
                   </td>
                   <td>

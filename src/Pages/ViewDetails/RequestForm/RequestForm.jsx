@@ -1,10 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthData } from "../../../Context/AuthProvider";
 import axios from "axios";
 import { IoCloseCircleSharp } from "react-icons/io5";
+import Swal from "sweetalert2";
+import { Warning } from "postcss";
+import toast, { Toaster } from "react-hot-toast";
 const RequestForm = ({ data }) => {
   const { user, themeData, sweetAlert, url } = useContext(AuthData);
+  const [reRender, setRender] = useState(false);
+  const [requestedData, setRequestedData] = useState(AuthData);
+
+  useEffect(() => {
+    axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
+      setRequestedData(res.data);
+    });
+  }, [url, user, reRender]);
+
   const handleRequest = (e) => {
     e.preventDefault();
     const requestData = {
@@ -16,19 +28,48 @@ const RequestForm = ({ data }) => {
       description: data.description,
       category: data.category,
       location: data.location,
-      volunteersNeeded: data.volunteersNeeded,
+      volunteersNeeded: parseInt(data.volunteersNeeded),
       deadline: data.deadline,
       organizer_name: data.organizer_name,
       organizer_email: data.organizer_email,
+      id: data._id,
     };
-    axios
-      .post(`${url}/requests`, requestData)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    const findData = requestedData?.map((item) => {
+      if (
+        item.postTitle == requestData.postTitle &&
+        item.deadline == requestData.deadline
+      ) {
+        return true;
+      }
+    });
+
+    if (!findData.includes(true)) {
+      if (requestData.v_email !== requestData.organizer_email) {
+        axios
+          .post(`${url}/requests`, requestData)
+          .then((res) => {
+            console.log(res.data);
+            setRender(!reRender);
+            axios
+              .patch(`${url}/all-volunteer-post/decrement/${data?._id}`)
+              .then((res) => {
+                console.log(res.data);
+                toast("Request sent successfully");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        toast("Sorry you can't Request on your post!");
+      }
+    } else {
+      toast("Already requested");
+    }
   };
   return (
     <div className="max-w-[1250px] p-3 lg:p-6 mx-auto">
@@ -196,6 +237,13 @@ const RequestForm = ({ data }) => {
             value={"Request Now"}
           />
         </form>
+        <Toaster
+          toastOptions={{
+            className: `!bg-gray-200 !text-red-500`,
+          }}
+          position="bottom-center"
+          reverseOrder={false}
+        />
       </div>
     </div>
   );

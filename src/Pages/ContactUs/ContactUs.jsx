@@ -16,21 +16,17 @@ const ContactUs = () => {
   };
   return (
     <div className="  min-h-screen mx-auto ">
-      <div className="">
-        <div className="bg-no-repeat bg-cover h-[300px] bg-right lg:h-[400px] -mt-[83px]">
-          <div
-            className={`!bg-opacity-50 w-full h-full flex flex-col justify-center items-center`}
-          >
-            <h3 className=" text-3xl font-semibold">Contact Us</h3>
+      <div className="max-w-[1200px]  mx-auto">
+        <div className="text-center mt-4 mb-4">
+          <h3 className=" text-3xl font-semibold">Contact Us</h3>
 
-            <p className="text-center max-w-[650px] mt-4 mx-auto">
-              compiles a diverse array of artistic creations and craft projects,
-              inspiring creativity and offering endless DIY possibilities.
-            </p>
-          </div>
+          <p className="text-center max-w-[650px] mt-4 mx-auto">
+            compiles a diverse array of artistic creations and craft projects,
+            inspiring creativity and offering endless DIY possibilities.
+          </p>
         </div>
-
-        <div className="grid max-w-[1200px] mt-8 lg:mt-12 px-3  mx-auto grid-cols-1 lg:grid-cols-2">
+        <hr className="border border-gray-400"/>
+        <div className="grid  mt-4 lg:mt-6 px-3 grid-cols-1 lg:grid-cols-2">
           <Lottie className="max-w-[500px]" animationData={contactUs} />
 
           <div className="p-3">
