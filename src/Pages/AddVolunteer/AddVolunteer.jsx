@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 const AddVolunteer = () => {
   const { user, themeData, sweetAlert, url, reRender, setRender } =
     useContext(AuthData);
@@ -54,6 +55,9 @@ const AddVolunteer = () => {
 
   return (
     <div className="max-w-[1450px] min-h-[calc(100vh-113px)] flex items-center mt-10 px-3 mx-auto">
+      <Helmet>
+        <title>VV |n Add Your Post</title>
+      </Helmet>
       <div
         className={`lg:max-w-[70%] mx-auto  ${
           themeData ? "dark:bg-gray-800" : "bg-gray-100"
