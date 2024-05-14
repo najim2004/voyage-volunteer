@@ -10,12 +10,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Helmet } from "react-helmet-async";
 
 const NeedVolunteerPage = () => {
-  const { data, url } = useContext(AuthData);
+  const { data, url, reRender, setRender } = useContext(AuthData);
   const [grid, setGrid] = useState(true);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     setPosts(data);
-  }, [data]);
+  }, [data, reRender]);
   const handleSearch = (e) => {
     e.preventDefault();
     const search = e.target.search.value;

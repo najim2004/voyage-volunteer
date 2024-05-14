@@ -4,14 +4,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
 const AddVolunteer = () => {
-  const { user, themeData, sweetAlert } = useContext(AuthData);
+  const { user, themeData, sweetAlert, url, reRender, setRender } =
+    useContext(AuthData);
   const [startDate, setStartDate] = useState(new Date());
+  console.log(new Date("DD/MM/YYY"));
 
   const handleAddPost = (e) => {
+    const todayDate = new Date();
     e.preventDefault();
     const form = e.target;
     const data = {
-      postDate: new Date(),
+      postDate: `${todayDate.getDate()}-${
+        todayDate.getMonth() + 1
+      }-${todayDate.getFullYear()}`,
       postTitle: form.title.value,
       thumbnail: form.thumbnail.value,
       description: form.description.value,
@@ -24,11 +29,12 @@ const AddVolunteer = () => {
         startDate.getMonth() + 1
       }/${startDate.getFullYear()}`,
     };
-    const url = "http://localhost:5000/all-volunteer-post";
+
     axios
-      .post(url, data)
+      .post(`${url}/all-volunteer-post`, data)
       .then((res) => {
         sweetAlert("Successfully Added", "success", false, false, 1500);
+        setRender(!reRender);
         form.reset();
       })
       .catch((err) => {

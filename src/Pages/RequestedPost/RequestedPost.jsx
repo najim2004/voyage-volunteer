@@ -6,18 +6,19 @@ import Lottie from "lottie-react";
 import no from "/public/no.json";
 import { Link } from "react-router-dom";
 import { CgDetailsMore } from "react-icons/cg";
+import useAxiosSecure from "../../Hooks/useAxios";
 
 const RequestedPost = () => {
-  const { url, user } = useContext(AuthData);
+  const { url, user, reRender, setRender } = useContext(AuthData);
   const [data, setData] = useState([]);
-
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    axios
-      .get(`${url}/requests?email=${user?.email}`, { withCredentials: true })
+    axiosSecure
+      .get(`/requests?email=${user?.email}`)
       .then((res) => {
         setData(res.data);
       });
-  }, [url, user]);
+  }, [url, user, reRender, axiosSecure]);
 
   const handleCancel = async (id, pId) => {
     Swal.fire({
@@ -39,7 +40,7 @@ const RequestedPost = () => {
             );
             console.log(res.data);
             setData(data.filter((item) => item._id !== id));
-
+            setRender(!reRender);
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",

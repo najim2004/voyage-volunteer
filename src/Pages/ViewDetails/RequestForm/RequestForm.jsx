@@ -6,15 +6,18 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import Swal from "sweetalert2";
 import { Warning } from "postcss";
 import toast, { Toaster } from "react-hot-toast";
+import { render } from "react-dom";
 const RequestForm = ({ data }) => {
-  const { user, themeData, sweetAlert, url } = useContext(AuthData);
-  const [reRender, setRender] = useState(false);
-  const [requestedData, setRequestedData] = useState(AuthData);
+  const { user, themeData, sweetAlert, url, reRender, setRender } =
+    useContext(AuthData);
+  const [requestedData, setRequestedData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${url}/requests?email=${user?.email}`).then((res) => {
-      setRequestedData(res.data);
-    });
+    axios
+      .get(`${url}/requests?email=${user?.email}`, { withCredentials: true })
+      .then((res) => {
+        setRequestedData(res.data);
+      });
   }, [url, user, reRender]);
 
   const handleRequest = (e) => {
@@ -34,7 +37,7 @@ const RequestForm = ({ data }) => {
       organizer_email: data.organizer_email,
       id: data._id,
     };
-
+    setRender(!reRender);
     const findData = requestedData?.map((item) => {
       if (
         item.postTitle == requestData.postTitle &&
@@ -43,7 +46,6 @@ const RequestForm = ({ data }) => {
         return true;
       }
     });
-
     if (!findData.includes(true)) {
       if (requestData.v_email !== requestData.organizer_email) {
         axios
@@ -55,6 +57,7 @@ const RequestForm = ({ data }) => {
               .patch(`${url}/all-volunteer-post/decrement/${data?._id}`)
               .then((res) => {
                 console.log(res.data);
+                setRender(!reRender);
                 toast("Request sent successfully");
               })
               .catch((err) => {

@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
 
-export const AuthData = createContext(null);
+export const AuthData = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -22,9 +22,10 @@ const AuthProvider = ({ children }) => {
   const [dataLoading, setDataLoading] = useState(true);
   const [themeData, setThemeData] = useState(false);
   const [data, setData] = useState([]);
+  const [reRender, setRender] = useState(false);
   const [testimonial, setTestimonial] = useState([]);
 
-  const url = "http://localhost:5000";
+  const url = "https://voyage-volunteer-server.vercel.app";
 
   // useEffect for Testimonial data
   useEffect(() => {
@@ -39,7 +40,7 @@ const AuthProvider = ({ children }) => {
       setData(res.data);
       setDataLoading(false);
     });
-  }, []);
+  }, [url, reRender]);
 
   const registerUser = (email, password) => {
     setLoading(true);
@@ -55,31 +56,35 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, githubProvider);
   };
 
+  // Monitor user changes
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      const userEmail = currentUser?.email || user?.email;
-      const loggedInUser = { email: userEmail };
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // get and set token
       setUser(currentUser);
+      const loggedUser = { email: currentUser?.email };
       if (currentUser) {
+        axios.post(`${url}/jwt`, loggedUser, {
+          withCredentials: true,
+        });
+      } else {
         axios
-          .post("http://localhost:5000/jwt", loggedInUser, {
+          .post(`${url}/logout`, loggedUser, {
             withCredentials: true,
           })
           .then((res) => {
-            console.log("token response", res.data);
-          });
-      } else {
-        axios
-          .post("http://localhost:5000/logout", loggedInUser, {
-            withCredentials: "true",
-          })
-          .then((res) => {
-            console.log(res.data);
+            if (res.data) {
+              // you can console.log to see res.data
+            }
           });
         setUser(null);
       }
+
       setLoading(false);
     });
+
+    return () => {
+      return unsubscribe();
+    };
   }, []);
 
   const loginUser = (email, password) => {
@@ -127,6 +132,8 @@ const AuthProvider = ({ children }) => {
     dataLoading,
     themeData,
     data,
+    reRender,
+    setRender,
     setThemeData,
     LoginByGoogle,
     LoginByGitHub,

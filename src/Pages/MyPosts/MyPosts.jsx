@@ -11,14 +11,18 @@ import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import no from "/public/no.json";
 import { SlCalender } from "react-icons/sl";
+import useAxiosSecure from "../../Hooks/useAxios";
 
 const MyPosts = () => {
-  const { url, user, themeData, sweetAlert } = useContext(AuthData);
+  const { url, user, themeData, sweetAlert, reRender, setRender } =
+    useContext(AuthData);
   const [data, setData] = useState([]);
   const [oldData, setOldData] = useState({});
   const [deadline, setDeadline] = useState(false);
 
   const [startDate, setStartDate] = useState(); // 15/07/2024
+
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     const parseDateString = (dateString) => {
       if (dateString) {
@@ -30,12 +34,10 @@ const MyPosts = () => {
   }, [deadline]);
 
   useEffect(() => {
-    axios
-      .get(`${url}/my-volunteer-post/${user.email}`, { withCredentials: true })
-      .then((res) => {
-        setData(res.data);
-      });
-  }, [user, url]);
+    axiosSecure.get(`/my-volunteer-post/${user.email}`).then((res) => {
+      setData(res.data);
+    });
+  }, [user, url, reRender]);
 
   const handleModal = (post) => {
     document.getElementById("my_modal_3").showModal();
@@ -63,7 +65,7 @@ const MyPosts = () => {
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           toast("Successfully updated");
-          form.reset();
+          setRender(!reRender);
         } else if (res.data.modifiedCount == 0) {
           toast("No Changes Made", {
             sticky: true, // Make the Toast sticky
@@ -101,6 +103,7 @@ const MyPosts = () => {
             if (data1.deletedCount > 0) {
               setData(data.filter((item) => item._id !== id));
               console.log(data);
+              setRender(!reRender);
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -186,7 +189,7 @@ const MyPosts = () => {
             } w-full relative p-3 lg:p-6 rounded-[20px]`}
           >
             <h3 className="text-center md:text-2xl text-xl lg:text-3xl font-bold">
-              Add Your Volunteer Post
+              Update Your Volunteer Post
             </h3>
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
