@@ -2,6 +2,7 @@ import { useContext, useRef } from "react";
 import { AuthData } from "../../Context/AuthProvider";
 import Lottie from "lottie-react";
 import contactUs from "/public/contact-us.json";
+import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
   const { themeData } = useContext(AuthData);
@@ -16,6 +17,9 @@ const ContactUs = () => {
   };
   return (
     <div className="  min-h-screen mx-auto ">
+      <Helmet>
+        <title>VV | Contact Details</title>
+      </Helmet>
       <div className="max-w-[1200px]  mx-auto">
         <div className="text-center mt-4 mb-4">
           <h3 className=" text-3xl font-semibold">Contact Us</h3>

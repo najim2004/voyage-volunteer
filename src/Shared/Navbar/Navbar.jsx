@@ -47,7 +47,7 @@ const Navbar = () => {
               </summary>
               <ul
                 className={`!p-4 ${
-                  bgColor || themeData ? "bg-gray-700" : "bg-white"
+                  themeData ? "bg-gray-700" : "bg-white text-black"
                 }  rounded-md space-y-4`}
               >
                 <li>
@@ -115,7 +115,7 @@ const Navbar = () => {
   return (
     <div
       className={`! !z-50 !sticky top-0 ${
-        bgColor ? "bg-black bg-opacity-60 text-white backdrop-blur-[8px]" : ""
+        bgColor ? "bg-black bg-opacity-60 backdrop-blur-[8px]" : ""
       } `}
     >
       <div className="max-w-[1450px] min-h-[72px] flex justify-between items-center mx-auto">
@@ -126,7 +126,11 @@ const Navbar = () => {
           >
             <div className="flex gap-2">
               <img className="h-[64px]" src={logo} alt="" />
-              <h3>
+              <h3
+                className={`${bgColor ? "text-white" : ""} ${
+                  location.pathname === "/" ? "text-white" : ""
+                }`}
+              >
                 Voyage
                 <br />
                 <span className="text-red-400">Volunteer</span>
@@ -135,7 +139,11 @@ const Navbar = () => {
           </Link>
         </div>
         <div className=" hidden h-full lg:flex">
-          <ul className="gap-10 n-menu flex font-medium items-center h-full menu-horizontal px-1">
+          <ul
+            className={`gap-10 n-menu ${
+              bgColor || location.pathname == "/" ? "text-white" : ""
+            } flex font-medium items-center h-full menu-horizontal px-1`}
+          >
             {menu}
           </ul>
         </div>
@@ -173,7 +181,7 @@ const Navbar = () => {
                       </div>
                       <ul
                         tabIndex={0}
-                        className={`${bgColor?"text-gray-300":''} mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52`}
+                        className={`mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52`}
                       >
                         {user && (
                           <li onClick={handleLogOut}>
