@@ -7,17 +7,16 @@ import no from "/public/no.json";
 import { Link } from "react-router-dom";
 import { CgDetailsMore } from "react-icons/cg";
 import useAxiosSecure from "../../Hooks/useAxios";
+import { Helmet } from "react-helmet-async";
 
 const RequestedPost = () => {
   const { url, user, reRender, setRender } = useContext(AuthData);
   const [data, setData] = useState([]);
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    axiosSecure
-      .get(`/requests?email=${user?.email}`)
-      .then((res) => {
-        setData(res.data);
-      });
+    axiosSecure.get(`/requests?email=${user?.email}`).then((res) => {
+      setData(res.data);
+    });
   }, [url, user, reRender, axiosSecure]);
 
   const handleCancel = async (id, pId) => {
@@ -55,6 +54,9 @@ const RequestedPost = () => {
   };
   return (
     <div className="relative">
+      <Helmet>
+        <title>VV | My Requested Post</title>
+      </Helmet>
       <div className="max-w-[1250px] min-h-[calc(100vh-140px)] pt-8 mx-auto">
         <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
           My Volunteer Requested Posts

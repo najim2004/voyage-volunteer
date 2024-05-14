@@ -12,6 +12,7 @@ import Lottie from "lottie-react";
 import no from "/public/no.json";
 import { SlCalender } from "react-icons/sl";
 import useAxiosSecure from "../../Hooks/useAxios";
+import { Helmet } from "react-helmet-async";
 
 const MyPosts = () => {
   const { url, user, themeData, sweetAlert, reRender, setRender } =
@@ -120,6 +121,9 @@ const MyPosts = () => {
 
   return (
     <div className="relative">
+      <Helmet>
+        <title>VV | My Added Posts</title>
+      </Helmet>
       <div className="max-w-[1250px] min-h-[calc(100vh-140px)]  pt-8 mx-auto">
         <h3 className="text-center text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 lg:mb-8">
           My Added Volunteer Need Posts
