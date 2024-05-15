@@ -68,7 +68,7 @@ const NeedVolunteerPage = () => {
           onClick={() => setGrid(false)}
         />
       </div>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 lg:gap-8 lg:grid-cols-3">
+      <div className="mt-4 grid px-3 grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 lg:gap-8 lg:grid-cols-3">
         {grid &&
           posts?.map((post) => (
             <div key={post._id} className=" flex flex-col">

@@ -12,7 +12,3 @@ body {
   border-bottom: 3px solid #f87171;
   padding-bottom: 3px;
 }
-
-.my-swal {
-  z-index: 1000 !important;
-}
