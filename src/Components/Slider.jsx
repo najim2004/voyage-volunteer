@@ -30,25 +30,25 @@ const Slider = () => {
       >
         <SwiperSlide>
           <div
-            className="h-screen bg-no-repeat bg-cover w-full"
+            className="h-screen bg-center bg-no-repeat bg-cover w-full"
             style={{ backgroundImage: `url(${sImg1})` }}
           ></div>
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="h-screen bg-no-repeat bg-cover w-full"
+            className="h-screen bg-center bg-no-repeat bg-cover w-full"
             style={{ backgroundImage: `url(${sImg2})` }}
           ></div>
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="h-screen bg-no-repeat bg-cover w-full"
+            className="h-screen bg-center bg-no-repeat bg-cover w-full"
             style={{ backgroundImage: `url(${sImg3})` }}
           ></div>
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="h-screen bg-no-repeat bg-cover w-full"
+            className="h-screen bg-center bg-no-repeat bg-cover w-full"
             style={{ backgroundImage: `url(${sImg4})` }}
           ></div>
         </SwiperSlide>

@@ -8,7 +8,6 @@ const AddVolunteer = () => {
   const { user, themeData, sweetAlert, url, reRender, setRender } =
     useContext(AuthData);
   const [startDate, setStartDate] = useState(new Date());
-  console.log(new Date("DD/MM/YYY"));
 
   const handleAddPost = (e) => {
     const todayDate = new Date();

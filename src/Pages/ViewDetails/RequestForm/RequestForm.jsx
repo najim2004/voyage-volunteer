@@ -57,7 +57,6 @@ const RequestForm = ({ data }) => {
             axios
               .patch(`${url}/all-volunteer-post/decrement/${data?._id}`)
               .then((res) => {
-                console.log(res.data);
                 setRender(!reRender);
                 setReRender2(!reRender2);
                 toast("Request sent successfully");
