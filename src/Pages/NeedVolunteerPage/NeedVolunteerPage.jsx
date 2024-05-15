@@ -8,6 +8,7 @@ import axios from "axios";
 import { RiLayoutGrid2Fill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Helmet } from "react-helmet-async";
+import { MdOutlinePublic } from "react-icons/md";
 
 const NeedVolunteerPage = () => {
   const { data, url, reRender, setRender } = useContext(AuthData);
@@ -67,21 +68,26 @@ const NeedVolunteerPage = () => {
           onClick={() => setGrid(false)}
         />
       </div>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 lg:gap-8 lg:grid-cols-3">
         {grid &&
           posts?.map((post) => (
-            <div key={post._id} className="p-4 flex flex-col">
-              <div className="flex-grow ">
+            <div key={post._id} className=" flex flex-col">
+              <div className="flex-grow relative ">
                 <img
                   className="w-full bg-gray-200 h-[250px] rounded-[5px]"
                   src={post.thumbnail}
                   alt=""
                 />
+                <div className="absolute top-0 flex left-0 w-full">
+                  <h3 className="flex items-center gap-1 px-1 mt-1 text-white bg-opacity-30 backdrop-blur-[1px] rounded-full bg-black">
+                    <MdOutlinePublic /> {post.postDate}
+                  </h3>
+                </div>
                 <div className="flex justify-between font-medium text-gray-500 mt-4">
                   <p className="flex items-center gap-1">
-                    Published Date:
+                    Deadline:
                     <CiCalendar />
-                    {post.postDate}
+                    {post.deadline}
                   </p>
                   <p>{post.organizer_name}</p>
                 </div>
@@ -126,9 +132,9 @@ const NeedVolunteerPage = () => {
                   </td>
                   <td>
                     <p className="flex text-nowrap items-center gap-1">
-                      Published Date:
+                      Deadline:
                       <CiCalendar />
-                      {post.postDate}
+                      {post.deadline}
                     </p>
                   </td>
                   <td>

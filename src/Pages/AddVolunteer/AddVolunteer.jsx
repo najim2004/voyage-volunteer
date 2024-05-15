@@ -15,9 +15,9 @@ const AddVolunteer = () => {
     e.preventDefault();
     const form = e.target;
     const data = {
-      postDate: `${todayDate.getDate()}-${
+      postDate: `${todayDate.getDate()}/${
         todayDate.getMonth() + 1
-      }-${todayDate.getFullYear()}`,
+      }/${todayDate.getFullYear()}`,
       postTitle: form.title.value,
       thumbnail: form.thumbnail.value,
       description: form.description.value,

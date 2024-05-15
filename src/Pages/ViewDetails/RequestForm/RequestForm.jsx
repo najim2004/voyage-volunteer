@@ -11,6 +11,7 @@ const RequestForm = ({ data }) => {
   const { user, themeData, sweetAlert, url, reRender, setRender } =
     useContext(AuthData);
   const [requestedData, setRequestedData] = useState([]);
+  const [reRender2, setReRender2] = useState(true);
 
   useEffect(() => {
     axios
@@ -18,7 +19,7 @@ const RequestForm = ({ data }) => {
       .then((res) => {
         setRequestedData(res.data);
       });
-  }, [url, user, reRender]);
+  }, [url, user, reRender, reRender2]);
 
   const handleRequest = (e) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ const RequestForm = ({ data }) => {
       organizer_email: data.organizer_email,
       id: data._id,
     };
-    setRender(!reRender);
+
     const findData = requestedData?.map((item) => {
       if (
         item.postTitle == requestData.postTitle &&
@@ -46,18 +47,19 @@ const RequestForm = ({ data }) => {
         return true;
       }
     });
+    setRender(!reRender);
     if (!findData.includes(true)) {
       if (requestData.v_email !== requestData.organizer_email) {
         axios
           .post(`${url}/requests`, requestData)
           .then((res) => {
-            console.log(res.data);
             setRender(!reRender);
             axios
               .patch(`${url}/all-volunteer-post/decrement/${data?._id}`)
               .then((res) => {
                 console.log(res.data);
                 setRender(!reRender);
+                setReRender2(!reRender2);
                 toast("Request sent successfully");
               })
               .catch((err) => {

@@ -8,7 +8,7 @@ import "swiper/css/free-mode";
 import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 const UpcomingEventsSection = () => {
-  const { themData } = useContext(AuthData);
+  const { themeData } = useContext(AuthData);
   const upcomingEvents = [
     {
       id: 1,
@@ -63,7 +63,7 @@ const UpcomingEventsSection = () => {
 
   return (
     <section className="py-12">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-[1450px] mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-6">Upcoming Events</h2>
         <p className="text-center max-w-[700px] mx-auto font-medium mt-6 mb-8">
           Discover exciting opportunities to make a difference in your community
@@ -85,7 +85,7 @@ const UpcomingEventsSection = () => {
             },
             // when window width is between md and lg breakpoint
             1024: {
-              slidesPerView: 2,
+              slidesPerView: 3,
             },
           }}
           navigation={true}
@@ -96,13 +96,29 @@ const UpcomingEventsSection = () => {
             <SwiperSlide key={event.id}>
               <div
                 className={`${
-                  themData ? "bg-gray-800" : ""
+                  themeData ? "bg-gray-800" : ""
                 } shadow-md rounded-lg p-6 h-[250px]`}
               >
                 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-                <p className="text-gray-600 mb-2">{event.date}</p>
-                <p className="text-gray-600 mb-4">{event.location}</p>
-                <p className="text-gray-700">{event.description}</p>
+                <p
+                  className={`${
+                    themeData ? "text-gray-300" : "text-gray-600"
+                  } mb-2`}
+                >
+                  {event.date}
+                </p>
+                <p
+                  className={`${
+                    themeData ? "text-gray-300" : "text-gray-600"
+                  }  mb-4`}
+                >
+                  {event.location}
+                </p>
+                <p
+                  className={`${themeData ? "text-gray-300" : "text-gray-700"}`}
+                >
+                  {event.description}
+                </p>
               </div>
             </SwiperSlide>
           ))}
