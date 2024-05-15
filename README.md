@@ -14,12 +14,11 @@ Visit the live site: [Voyage Volunteer - Live Site](https://voyage-volunteer.web
 ### Volunteer Post Management:
 
 - **Create, Update, Delete Posts**: Easily manage your volunteer posts with full control over editing and deleting.
-- **View Requests**: See all requests for your posts and manage them efficiently.
+- **Requested Post Viewing**: View posts for which you've requested to volunteer, ensuring clarity and organization.
 
-### Profile Management:
+### Request Limitations:
 
-- **Profile Settings**: Customize your profile details and settings to personalize your experience.
-- **Manage Posts and Requests**: Access and manage your volunteer posts and requests from your profile.
+- **Request Restrictions**: Users cannot request their own posts for volunteer positions, maintaining fairness and transparency.
 
 ### Dark/Light Mode:
 
