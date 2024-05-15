@@ -20,6 +20,10 @@ Visit the live site: [Voyage Volunteer - Live Site](https://voyage-volunteer.web
 
 - **Request Restrictions**: Users cannot request their own posts for volunteer positions, maintaining fairness and transparency.
 
+### Search Functionality:
+
+- **Post Title Search**: Search for volunteer posts by post title on the Need Volunteer route, ensuring easy access to relevant opportunities.
+
 ### Dark/Light Mode:
 
 - **Personalized Theme**: Choose between dark and light mode options for a comfortable viewing experience.
