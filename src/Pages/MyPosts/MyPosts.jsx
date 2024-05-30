@@ -10,15 +10,14 @@ import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import no from "/public/no.json";
-import { SlCalender } from "react-icons/sl";
 import useAxiosSecure from "../../Hooks/useAxios";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { CgDetailsMore } from "react-icons/cg";
-
+import { useMediaQuery } from "react-responsive";
 const MyPosts = () => {
-  const { url, user, themeData, sweetAlert, reRender, setRender } =
-    useContext(AuthData);
+  const sm = useMediaQuery({ query: "(max-width: 640px)" });
+  console.log(sm);
+  const { url, user, themeData, reRender, setRender } = useContext(AuthData);
   const [data, setData] = useState([]);
   const [oldData, setOldData] = useState({});
   const [deadline, setDeadline] = useState(false);
@@ -67,19 +66,23 @@ const MyPosts = () => {
       .patch(`${url}/all-volunteer-post/${oldData?._id}`, data)
       .then((res) => {
         if (res.data.modifiedCount > 0) {
-          toast("Successfully updated");
+          const modalElement = document.getElementById("my_modal_3");
+          modalElement.close();
+          Swal.fire({
+            icon: "success",
+            title: "Successfully Updated!",
+            showConfirmButton: false,
+            timer: 1000,
+          });
           setRender(!reRender);
         } else if (res.data.modifiedCount == 0) {
           toast("No Changes Made", {
-            sticky: true, 
+            sticky: true,
+            style: {
+              background: "green",
+              color: "white",
+            },
           });
-
-          // Swal.fire({
-          //   icon: "error",
-          //   title: "No Changes Made",
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          // });
         } else {
           toast("Oops! Something went wrong!");
         }
@@ -129,7 +132,7 @@ const MyPosts = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="">
       <Helmet>
         <title>VV | My Added Posts</title>
       </Helmet>
@@ -152,10 +155,13 @@ const MyPosts = () => {
                       alt=""
                     />
                   </td>
+
                   <td className="lg:w-[350px]">{post.postTitle}</td>
+
                   <td className="flex items-center gap-1">
                     Deadline:{post.deadline}
                   </td>
+
                   <td>
                     <Link to={`/details/${post._id}`}>
                       <button className="btn btn-sm text-2xl flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10">
@@ -163,6 +169,7 @@ const MyPosts = () => {
                       </button>
                     </Link>
                   </td>
+
                   <td className="flex justify-center">
                     <div className="w-full h-full flex flex-col justify-between gap-2">
                       <button
@@ -198,15 +205,17 @@ const MyPosts = () => {
           </div>
         )}
       </div>
+
+      {/* modal start here */}
       <dialog
         id="my_modal_3"
-        className="modal min-h-screen backdrop-blur-[8px] !overflow-y-auto"
+        className="modal min-h-screen z-50  backdrop-blur-[8px] !overflow-y-auto"
       >
         <div className="max-w-[1450px] mx-auto  py-6 lg:py-10">
           <div
             className={`mx-auto  ${
               themeData ? "dark:bg-gray-800" : "bg-gray-100"
-            } w-full relative p-3 lg:p-6 rounded-[20px]`}
+            } w-full relative p-3  lg:p-6 rounded-[20px]`}
           >
             <h3 className="text-center md:text-2xl text-xl lg:text-3xl font-bold">
               Update Your Volunteer Post
@@ -219,7 +228,7 @@ const MyPosts = () => {
             </form>
             <form
               onSubmit={handleUpdate}
-              className="grid grid-cols-1 lg:px-10  mt-8 lg:grid-cols-2 gap-6"
+              className="grid grid-cols-1 lg:px-10 md:w-[calc(100vw-60px)] lg:w-full  mt-8 lg:grid-cols-2 gap-6"
             >
               <div className="space-y-2">
                 <label className="font-bold">Title</label>
@@ -335,13 +344,21 @@ const MyPosts = () => {
                 id="Add"
               />
             </form>
-            <Toaster
-              toastOptions={{
-                className: `!bg-gray-200 !text-red-500`,
-              }}
-              position="bottom-center"
-              reverseOrder={false}
-            />
+            <div className="">
+              <Toaster
+                containerStyle={{
+                  top: parseInt(`${sm ? 1100 : 500}`),
+                  left: 20,
+                  bottom: 20,
+                  right: 20,
+                }}
+                toastOptions={{
+                  className: `!bg-gray-200 !text-red-500`,
+                }}
+                position="bottom-center"
+                reverseOrder={false}
+              />
+            </div>
           </div>
         </div>
       </dialog>
