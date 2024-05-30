@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
   const [reRender, setRender] = useState(false);
   const [testimonial, setTestimonial] = useState([]);
 
-  const url = "http://localhost:5000";
+  const url = "https://voyage-volunteer-server.vercel.app";
 
   // useEffect for Testimonial data
   useEffect(() => {
