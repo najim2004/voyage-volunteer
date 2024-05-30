@@ -29,6 +29,8 @@ const RequestCard = ({ post, handleSave }) => {
             >
               <option>Requested</option>
               <option>Accepted</option>
+              <option>Waiting</option>
+              <option>Declined</option>
             </select>
           </div>
         </td>
@@ -41,7 +43,9 @@ const RequestCard = ({ post, handleSave }) => {
         </td>
         <td>
           <button
-            onClick={() => handleSave(post._id, isSelected)}
+            onClick={() =>
+              handleSave(post._id, isSelected, post.organizer_email)
+            }
             className="btn bg-red-500 text-white text-xl btn-sm h-10"
           >
             <FaSave />

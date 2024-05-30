@@ -12,15 +12,20 @@ const UserRequest = () => {
   const { url, user, reRender, setRender } = useContext(AuthData);
   const [data, setData] = useState();
   const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     axiosSecure.get(`/requests?organizer_email=${user?.email}`).then((res) => {
       setData(res.data);
     });
   }, [url, user, reRender, axiosSecure]);
-  const handleSave = async (id, status) => {
+
+  const handleSave = async (id, status, organizer_email) => {
     console.log(status);
     try {
-      const { data } = await axiosSecure.patch(`/requests/${id}`, { status });
+      const { data } = await axiosSecure.patch(`/requests/${id}`, {
+        status,
+        email: organizer_email,
+      });
       if (data.modifiedCount > 0) {
         setRender(!reRender);
         Swal.fire({
