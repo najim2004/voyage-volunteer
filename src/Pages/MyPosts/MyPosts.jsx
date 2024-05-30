@@ -13,6 +13,8 @@ import no from "/public/no.json";
 import { SlCalender } from "react-icons/sl";
 import useAxiosSecure from "../../Hooks/useAxios";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
+import { CgDetailsMore } from "react-icons/cg";
 
 const MyPosts = () => {
   const { url, user, themeData, sweetAlert, reRender, setRender } =
@@ -35,10 +37,10 @@ const MyPosts = () => {
   }, [deadline]);
 
   useEffect(() => {
-    axiosSecure.get(`/my-volunteer-post/${user.email}`).then((res) => {
+    axiosSecure.get(`/my-volunteer-post/${user?.email}`).then((res) => {
       setData(res.data);
     });
-  }, [user, url, reRender]);
+  }, [user?.email, url, reRender]);
 
   const handleModal = (post) => {
     document.getElementById("my_modal_3").showModal();
@@ -146,6 +148,13 @@ const MyPosts = () => {
                   <td className="lg:w-[350px]">{post.postTitle}</td>
                   <td className="flex items-center gap-1">
                     Deadline:{post.deadline}
+                  </td>
+                  <td>
+                    <Link to={`/details/${post._id}`}>
+                      <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10 min-w-[150px]">
+                        View Details <CgDetailsMore />
+                      </button>
+                    </Link>
                   </td>
                   <td className="flex justify-center">
                     <div className="w-full h-full flex flex-col justify-between gap-2">

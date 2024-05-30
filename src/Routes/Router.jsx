@@ -11,6 +11,7 @@ import ViewDetails from "../Pages/ViewDetails/ViewDetails";
 import NeedVolunteerPage from "../Pages/NeedVolunteerPage/NeedVolunteerPage";
 import MyPosts from "../Pages/MyPosts/MyPosts";
 import RequestedPost from "../Pages/RequestedPost/RequestedPost";
+import Dashboard from "../Layout/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,24 @@ const router = createBrowserRouter([
             <RequestedPost />
           </PrivateRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <MyPosts />,
+      },
+      {
+        path: "my-requested-post",
+        element: <RequestedPost />,
       },
     ],
   },

@@ -33,35 +33,10 @@ const Navbar = () => {
       {user && (
         <>
           <li>
-            <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
+            <NavLink to={"/dashboard"}>Dashboard</NavLink>
           </li>
-
-          <li className="cursor-pointer">
-            <details>
-              <summary
-                className={`${
-                  myProfile ? "pb-[3px] border-b-[3px] border-cRed" : ""
-                }`}
-              >
-                My Profile
-              </summary>
-              <ul
-                className={`!p-4 ${
-                  themeData ? "bg-gray-700" : "bg-white text-black"
-                }  rounded-md space-y-4`}
-              >
-                <li>
-                  <NavLink to={"/my-added-posts"}>
-                    Added Volunteer Posts
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={"/my-requested-post"}>
-                    Volunteer Requested Posts
-                  </NavLink>
-                </li>
-              </ul>
-            </details>
+          <li>
+            <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
           </li>
         </>
       )}
