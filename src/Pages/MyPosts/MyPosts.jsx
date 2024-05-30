@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdReadMore } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import DatePicker from "react-datepicker";
@@ -71,8 +71,15 @@ const MyPosts = () => {
           setRender(!reRender);
         } else if (res.data.modifiedCount == 0) {
           toast("No Changes Made", {
-            sticky: true, // Make the Toast sticky
+            sticky: true, 
           });
+
+          // Swal.fire({
+          //   icon: "error",
+          //   title: "No Changes Made",
+          //   showConfirmButton: false,
+          //   timer: 1500,
+          // });
         } else {
           toast("Oops! Something went wrong!");
         }
@@ -151,8 +158,8 @@ const MyPosts = () => {
                   </td>
                   <td>
                     <Link to={`/details/${post._id}`}>
-                      <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10 min-w-[150px]">
-                        View Details <CgDetailsMore />
+                      <button className="btn btn-sm text-2xl flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10">
+                        <MdReadMore />
                       </button>
                     </Link>
                   </td>

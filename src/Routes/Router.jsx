@@ -12,6 +12,7 @@ import NeedVolunteerPage from "../Pages/NeedVolunteerPage/NeedVolunteerPage";
 import MyPosts from "../Pages/MyPosts/MyPosts";
 import RequestedPost from "../Pages/RequestedPost/RequestedPost";
 import Dashboard from "../Layout/Dashboard";
+import UserRequest from "../Pages/Dashboard/UserRequest";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "my-requested-post",
         element: <RequestedPost />,
+      },
+      {
+        path: "user-requested-post",
+        element: <UserRequest />,
       },
     ],
   },

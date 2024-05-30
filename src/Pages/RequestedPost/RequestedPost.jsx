@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 import { CgDetailsMore } from "react-icons/cg";
 import useAxiosSecure from "../../Hooks/useAxios";
 import { Helmet } from "react-helmet-async";
+import { MdReadMore } from "react-icons/md";
 
 const RequestedPost = () => {
   const { url, user, reRender, setRender } = useContext(AuthData);
   const [data, setData] = useState([]);
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    axiosSecure.get(`/requests?email=${user?.email}`).then((res) => {
+    axiosSecure.get(`/requests?v_email=${user?.email}`).then((res) => {
       setData(res.data);
     });
   }, [url, user, reRender, axiosSecure]);
@@ -85,8 +86,8 @@ const RequestedPost = () => {
                   </td>
                   <td>
                     <Link to={`/details/${post.id}`}>
-                      <button className="btn btn-sm flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10 min-w-[150px]">
-                        View Details <CgDetailsMore />
+                      <button className="btn btn-sm text-2xl flex items-center gap-1 rounded-[5px] font-bold text-white bg-cRed h-10">
+                        <MdReadMore />
                       </button>
                     </Link>
                   </td>
