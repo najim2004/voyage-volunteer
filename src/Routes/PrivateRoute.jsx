@@ -8,8 +8,8 @@ const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthData);
   if (loading) {
     return (
-      <div className=" h-[calc(100vh-72px)] absolute z-50 w-full bg-white bg-opacity-60 backdrop-blur-[5px] grid place-items-center">
-        <span className="loading size-[80px] text-cRed loading-infinity loading-lg"></span>
+      <div className="fixed top-0 h-screen z-50 w-full bg-white bg-opacity-60 backdrop-blur-[5px] grid place-items-center">
+        <span className="loading loading-dots loading-lg text-cRed"></span>
       </div>
     );
   }

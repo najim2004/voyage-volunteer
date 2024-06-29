@@ -17,7 +17,8 @@ import { useMediaQuery } from "react-responsive";
 const MyPosts = () => {
   const sm = useMediaQuery({ query: "(max-width: 640px)" });
   console.log(sm);
-  const { url, user, themeData, reRender, setRender } = useContext(AuthData);
+  const { url, user, themeData, reRender, setRender, refetchData } =
+    useContext(AuthData);
   const [data, setData] = useState([]);
   const [oldData, setOldData] = useState({});
   const [deadline, setDeadline] = useState(false);
@@ -33,13 +34,13 @@ const MyPosts = () => {
       }
     };
     setStartDate(parseDateString(oldData?.deadline));
-  }, [deadline]);
+  }, [deadline, oldData]);
 
   useEffect(() => {
     axiosSecure.get(`/my-volunteer-post/${user?.email}`).then((res) => {
       setData(res.data);
     });
-  }, [user?.email, url, reRender]);
+  }, [user?.email, url, reRender, axiosSecure]);
 
   const handleModal = (post) => {
     document.getElementById("my_modal_3").showModal();
@@ -117,6 +118,7 @@ const MyPosts = () => {
               setData(data.filter((item) => item._id !== id));
               console.log(data);
               setRender(!reRender);
+              refetchData.allPost();
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",

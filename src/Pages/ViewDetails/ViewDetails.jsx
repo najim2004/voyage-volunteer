@@ -4,16 +4,29 @@ import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
 import RequestForm from "./RequestForm/RequestForm";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../Components/Loader/Loader";
 
 const ViewDetails = () => {
   const { id } = useParams();
-  const { url, themeData, sweetAlert } = useContext(AuthData);
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    axios.get(`${url}/all-volunteer-post/${id}`).then((res) => {
-      setData(res.data);
-    });
-  }, [url, id]);
+  const { sweetAlert, loading } = useContext(AuthData);
+  // const [data, setData] = useState([]);
+  const axiosPublic = useAxiosPublic();
+
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["post", id],
+    queryFn: async () => {
+      try {
+        const response = await axiosPublic.get(`/all-volunteer-post/${id}`);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
+
+  if (isLoading && loading === false) return <Loader />;
 
   const handleRequest = () => {
     if (data.volunteersNeeded !== 0) {

@@ -3,8 +3,6 @@ import { AuthData } from "../../Context/AuthProvider";
 import Lottie from "lottie-react";
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../Hooks/useAxios";
-import { CgDetailsMore } from "react-icons/cg";
-import { Link } from "react-router-dom";
 import no from "/public/no.json";
 import RequestCard from "./RequestCard";
 import Swal from "sweetalert2";

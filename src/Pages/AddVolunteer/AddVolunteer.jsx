@@ -5,7 +5,7 @@ import { AuthData } from "../../Context/AuthProvider";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 const AddVolunteer = () => {
-  const { user, themeData, sweetAlert, url, reRender, setRender } =
+  const { user, themeData, sweetAlert, url, refetchData } =
     useContext(AuthData);
   const [startDate, setStartDate] = useState(new Date());
 
@@ -34,7 +34,7 @@ const AddVolunteer = () => {
       .post(`${url}/all-volunteer-post`, data)
       .then((res) => {
         sweetAlert("Successfully Added", "success", false, false, 1500);
-        setRender(!reRender);
+        refetchData.allPost();
         form.reset();
       })
       .catch((err) => {
@@ -58,7 +58,7 @@ const AddVolunteer = () => {
         <title>VV | Add Your Post</title>
       </Helmet>
       <div
-        className={`lg:max-w-[70%] mx-auto  ${
+        className={`lg:max-w-[70%] w-full md:w-[80%] mx-auto  ${
           themeData ? "dark:bg-gray-800" : "bg-gray-100"
         }  p-3 lg:p-6 rounded-[20px]`}
       >

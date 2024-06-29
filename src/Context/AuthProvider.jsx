@@ -13,6 +13,8 @@ import { auth } from "../Firebase/Firebase.config";
 import Swal from "sweetalert2";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthData = createContext();
 
@@ -21,26 +23,26 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(true);
   const [themeData, setThemeData] = useState(false);
-  const [data, setData] = useState([]);
+  const [refetchData, setRefetchData] = useState({});
   const [reRender, setRender] = useState(false);
-  const [testimonial, setTestimonial] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
   const url = "https://voyage-volunteer-server.vercel.app";
+  const { data, isLoading } = useQuery({
+    queryKey: ["allData"],
+    queryFn: async () => {
+      const response = await axiosPublic.get(`/all-volunteer-post`);
+      return response.data;
+    },
+  });
 
-  // useEffect for Testimonial data
   useEffect(() => {
-    axios.get(`${url}/testimonial`).then((res) => {
-      setTestimonial(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    setDataLoading(true);
-    axios.get(`${url}/all-volunteer-post`).then((res) => {
-      setData(res.data);
-      setDataLoading(false);
-    });
-  }, [url, reRender]);
+    if (isLoading) {
+      setDataLoading(true);
+      return;
+    }
+    setDataLoading(false);
+  }, [isLoading, setDataLoading]);
 
   const registerUser = (email, password) => {
     setLoading(true);
@@ -125,7 +127,6 @@ const AuthProvider = ({ children }) => {
 
   const contextData = {
     setDataLoading,
-    testimonial,
     url,
     user,
     loading,
@@ -143,6 +144,8 @@ const AuthProvider = ({ children }) => {
     sweetAlert,
     sweetLoginAlert,
     updateUserProfile,
+    refetchData,
+    setRefetchData,
   };
   return <AuthData.Provider value={contextData}>{children}</AuthData.Provider>;
 };

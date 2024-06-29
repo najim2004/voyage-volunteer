@@ -1,38 +1,39 @@
 import { BiCategoryAlt } from "react-icons/bi";
 import { CgDetailsMore } from "react-icons/cg";
 import { CiCalendar } from "react-icons/ci";
-import { AuthData } from "../../Context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { RiLayoutGrid2Fill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Helmet } from "react-helmet-async";
 import { MdOutlinePublic } from "react-icons/md";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../Components/Loader/Loader";
+import { AuthData } from "../../Context/AuthProvider";
 
 const NeedVolunteerPage = () => {
-  const { data, url, reRender, setRender } = useContext(AuthData);
+  const { refetchData, setRefetchData } = useContext(AuthData);
   const [grid, setGrid] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [search, setSearch] = useState();
+  const axiosPublic = useAxiosPublic();
+  const {
+    data: posts = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["allData"],
+    queryFn: async () => {
+      const response = await axiosPublic.get(
+        `/all-volunteer-post?title=${search.length > 0 ? search : ""}`
+      );
+      return response.data;
+    },
+  });
   useEffect(() => {
-    setPosts(data);
-  }, [data, reRender]);
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const search = e.target.search.value;
-    axios
-      .get(`${url}/all-volunteer-post?title=${search}`)
-      .then((res) => {
-        if (search) {
-          setPosts(res.data);
-        } else {
-          setPosts(data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    setRefetchData({ ...refetchData, allPost: refetch });
+  }, [refetch, refetchData, setRefetchData]);
+  if (isLoading) return <Loader />;
   return (
     <div className="max-w-[1250px] mx-auto min-h-[calc(100vh-73px)]">
       <Helmet>
@@ -42,7 +43,12 @@ const NeedVolunteerPage = () => {
         Find Volunteer Opportunities Near You
       </h3>
       <form
-        onSubmit={handleSearch}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const query = e.target.search.value;
+          await setSearch(query);
+          await refetch();
+        }}
         className="h-12 w-full mt-8 px-3 lg:w-[752px] mx-auto rounded-lg flex items-center "
       >
         <input

@@ -10,18 +10,7 @@ const Navbar = () => {
   const { user, logOutUser, sweetAlert, loading, themeData, setThemeData } =
     useContext(AuthData);
   const [isChecked, setChecked] = useState(false);
-  const [myProfile, setMyProfile] = useState(false);
   const [bgColor, setBgColor] = useState(false);
-  useEffect(() => {
-    if (
-      location?.pathname === "/my-added-posts" ||
-      location?.pathname === "/my-requested-post"
-    ) {
-      setMyProfile(true);
-    } else {
-      setMyProfile(false);
-    }
-  }, [location?.pathname]);
   const menu = (
     <>
       <li>
@@ -30,33 +19,33 @@ const Navbar = () => {
       <li>
         <NavLink to={"/need_volunteer"}>Need Volunteer</NavLink>
       </li>
-      {user && (
-        <>
-          <li>
-            <NavLink to={"/dashboard"}>Dashboard</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
-          </li>
-        </>
-      )}
 
       <li>
         <NavLink to={"/contact"}>Contact us</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to={"/add-volunteer-post"}>Add Volunteer Post</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/dashboard"}>Dashboard</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
   const theme = getTheme();
   useEffect(() => {
-    setThemeData(getTheme);
+    setThemeData(getTheme());
     const html = document.querySelector("html");
     if (theme) {
       html.setAttribute("data-theme", "dark");
     } else {
       html.setAttribute("data-theme", "light");
     }
-  }, [getTheme, isChecked]);
+  }, [isChecked, setThemeData, theme]);
 
   const handleTheme = (e) => {
     setTheme(e.target.checked);

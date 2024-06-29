@@ -1,14 +1,24 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthData } from "../../../Context/AuthProvider";
 import { CgDetailsMore } from "react-icons/cg";
 import { CiCalendar } from "react-icons/ci";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlinePublic } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Loader from "../../../Components/Loader/Loader";
 
 const VolunteerNeed = () => {
-  const { data } = useContext(AuthData);
+  const axiosPublic = useAxiosPublic();
+  const { data, isLoading } = useQuery({
+    queryKey: ["allData"],
+    queryFn: async () => {
+      const response = await axiosPublic.get(`/all-volunteer-post`);
+      return response.data;
+    },
+  });
+  if (isLoading) return <Loader />;
+
   return (
     <div className="mt-[100px] px-3 max-w-[1250px] mx-auto">
       <h3 className="text-4xl text-center font-semibold">

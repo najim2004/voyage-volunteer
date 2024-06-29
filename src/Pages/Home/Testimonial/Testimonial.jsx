@@ -1,9 +1,21 @@
 import { useContext } from "react";
 import { AuthData } from "../../../Context/AuthProvider";
 import Marquee from "react-fast-marquee";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Loader from "../../../Components/Loader/Loader";
 
 const Testimonial = () => {
-  const { testimonial, themeData } = useContext(AuthData);
+  const axiosPublic = useAxiosPublic();
+  const { themeData } = useContext(AuthData);
+  const { data: testimonial, isLoading } = useQuery({
+    queryKey: ["testimonial"],
+    queryFn: async () => {
+      const response = await axiosPublic.get("/testimonial");
+      return response.data;
+    },
+  });
+  if (isLoading) return <Loader />;
   return (
     <div className="max-w-[1450px] mx-auto">
       <section className="my-8">
