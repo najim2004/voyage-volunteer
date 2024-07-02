@@ -52,7 +52,6 @@ VITE_PROJECTID=<your-firebase-project-id>
 VITE_STORAGEBUCKET=<your-firebase-storage-bucket>
 VITE_MESSAGINGSENDERID=<your-firebase-messaging-sender-id>
 VITE_APPID=<your-firebase-app-id>
-VITE_IMGBBAPIKRY=<your-imgbb-api-key>
 ```
 
 #### Server-side `.env`
